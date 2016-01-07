@@ -11,47 +11,42 @@ function Creep.ModuleInit()
 	GUI_WindowVisible("Creep",true)	
 	GUI_NewField("Creep","Target Name","TName","MainMenu")
 	GUI_NewField("Creep","Target Health","CCTHP","MainMenu")
---	GUI_NewField("Creep"," "," ","MainMenu")
---	GUI_NewField("Creep"," "," ","MainMenu")
 	GUI_NewField("Creep","Target       XYZ: ","TPos","MainMenu")
---	GUI_NewField("Creep","Target Radians","rradians","MainMenu")
---	GUI_NewField("Creep","Target Degrees","rdegrees","MainMenu")
---	GUI_NewField("Creep","Target Facing","facing","MainMenu")
---	GUI_NewField("Creep"," "," ","MainMenu")
+	GUI_NewField("Creep","    "," ","MainMenu")
 	GUI_NewField("Creep","My Position XYZ: ","myposition","MainMenu")
 	GUI_NewField("Creep","Distance","TDist","MainMenu")
---	GUI_NewField("Creep","My Radians","myrradians","MainMenu")
---	GUI_NewField("Creep","My Degrees","myrdegrees","MainMenu")
---	GUI_NewField("Creep","My Facing","myfacing","MainMenu")
-	----------------------------------------------------
+
 	GUI_NewButton("Creep","Perform Creep","Creep.Teleport")
 	RegisterEventHandler("Creep.Teleport", Creep.func)
 end
------------------------------------------------------------------------------------------------
+
 function Creep.func ( arg ) -- perform the Teleport
-	if ( arg == "Creep.Teleport" ) then
-	-- Player:Teleport(tonumber(CCTx),tonumber(CCTy),tonumber(CCTz))
-				local CCT = Player:GetTarget()
-				if facing == "N" then Player:Teleport(CCT.pos.x, CCT.pos.y-90, CCT.pos.z) end
-				if facing == "S" then Player:Teleport(CCT.pos.x, CCT.pos.y+90, CCT.pos.z) end
-				if facing == "E" then Player:Teleport(CCT.pos.x-90, CCT.pos.y, CCT.pos.z) end
-				if facing == "W" then Player:Teleport(CCT.pos.x+90, CCT.pos.y, CCT.pos.z) end
-				if facing == "NE" then Player:Teleport(CCT.pos.x-90, CCT.pos.y-90, CCT.pos.z) end
-				if facing == "NW" then Player:Teleport(CCT.pos.x+90, CCT.pos.y-90, CCT.pos.z) end
-				if facing == "SE" then Player:Teleport(CCT.pos.x-90, CCT.pos.y+90, CCT.pos.z) end
-				if facing == "SW" then Player:Teleport(CCT.pos.x+90, CCT.pos.y+90, CCT.pos.z) end
-				--	Player:SetFacingExact(CCT.pos.x,CCT.pos.y,CCT.po​s.z)
-				local CCT = Player:GetTarget()
-				Player:SetFacingExact(CCT.pos.x,CCT.pos.y,CCT.pos.z,true)
+	if ( arg == "Creep.Teleport" ) then local CCT = Player:GetTarget()
+	
+				if facing == "N" then d(Player:Teleport(CCT.pos.x, CCT.pos.y-90, CCT.pos.z))
+				Player:SetFacingExact(CCT.pos.x,CCT.pos.y,CCT.pos.z,true) 
+				elseif facing == "S" then d(Player:Teleport(CCT.pos.x, CCT.pos.y+90, CCT.pos.z))
+				Player:SetFacingExact(CCT.pos.x,CCT.pos.y,CCT.pos.z,true) 
+				elseif facing == "E" then d(Player:Teleport(CCT.pos.x-90, CCT.pos.y, CCT.pos.z)) 
+				Player:SetFacingExact(CCT.pos.x,CCT.pos.y,CCT.pos.z,true) 
+				elseif facing == "W" then d(Player:Teleport(CCT.pos.x+90, CCT.pos.y, CCT.pos.z))
+				Player:SetFacingExact(CCT.pos.x,CCT.pos.y,CCT.pos.z,true) 
+				elseif facing == "NE" then d(Player:Teleport(CCT.pos.x-90, CCT.pos.y-90, CCT.pos.z))
+				Player:SetFacingExact(CCT.pos.x,CCT.pos.y,CCT.pos.z,true) 
+				elseif facing == "NW" then d(Player:Teleport(CCT.pos.x+90, CCT.pos.y-90, CCT.pos.z)) 
+				Player:SetFacingExact(CCT.pos.x,CCT.pos.y,CCT.pos.z,true) 
+				elseif facing == "SE" then d(Player:Teleport(CCT.pos.x-90, CCT.pos.y+90, CCT.pos.z)) 
+				Player:SetFacingExact(CCT.pos.x,CCT.pos.y,CCT.pos.z,true) 
+				elseif facing == "SW" then d(Player:Teleport(CCT.pos.x+90, CCT.pos.y+90, CCT.pos.z)) 
+				Player:SetFacingExact(CCT.pos.x,CCT.pos.y,CCT.pos.z,true) 
+				end
 	end
 end
 
 function Creep.UpdateWindow() -- show some stats on the target, define some variables, constantly updating with info
 			local CCT = Player:GetTarget()
-				CCTx = tostring(math.floor(CCT.pos.x))
-				CCTy = tostring(math.floor(CCT.pos.y))
-				CCTz = tostring(math.floor(CCT.pos.z))			
-			
+			if CCT ~= nil then	
+		
 			TName = tostring(CCT.name)
 			CCTHP = tostring(CCT.health.current.." of "..CCT.health.max.." / "..CCT.health.percent.."%")
 			TDist = tostring(math.floor(CCT.distance))
@@ -77,6 +72,7 @@ function Creep.UpdateWindow() -- show some stats on the target, define some vari
 			------------------------------------------------
 			facing = Creep.facingdirection()
 			myfacing = Creep.myfacingdirection()
+	end
 end
 
 function Creep.facingdirection()
@@ -105,7 +101,6 @@ end
 
 function Creep.OnUpdateHandler( Event, ticks ) 			
 	Creep.UpdateWindow()
-	Creep.facingdirection{}
 end
 
 RegisterEventHandler("Module.Initalize",Creep.ModuleInit)
