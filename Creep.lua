@@ -1,5 +1,6 @@
 --- 12/26/2015 work in progress. just trying to get the basics working at the moment.
 ---	12/29/2015 First rough build now working! 
+--- 01/07/2016 v1.01 Fixed CCT index nil error viewable in the console when program was running. occurred whenever no target was currently selected.
 
 Creep = { }
 Creep.lastticks = 0
